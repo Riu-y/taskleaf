@@ -1,0 +1,103 @@
+    models:
+      task: タスク 
+      attributes:
+      task:
+         id: ID
+      name: 名称
+      description: 詳しい説明 
+      created_at: 登録日時 
+      updated_at: 更新日時
+
+      before_validation :set_nameless_name
+
+
+      private
+
+      def set_nameless_name
+        self.name='名前なし'　if name.blank?
+        end
+
+
+        before_validation ,検証前の値の正規化
+        after_valodation 検証結果（エラーメッセージ） の加工
+        before_save
+        before_create
+        before_update
+        saveのために裏側で行いたいデータ準備を行う
+        検証エラーを出してもユーザーにはどうすることもできない状態異常を防ぐために例外を出す。
+
+        after_save
+        after_crete
+        after_update
+        そのモデルの状態に応じて他のモデルの状態を変えるなど、連動した挙動を実現する
+        検証エラーを出してもユーザーにはどうすることもできない状態異常を防ぐために例外を出す
+
+        before_destroy
+
+        after_destroy
+        そのモデルの削除に応じて他のモデルの状態を変えるといった連動した挙動を実現する
+
+describe[仕様を記述する対象],type: [Specの種類]　do
+
+content[ある状況] do
+	before do
+	[事前準備]s
+	end
+
+	it[仕事の内容（期待の概要）]do
+	[期待する動作]
+	end
+end
+
+end
+
+describe '~機能',type: :system do
+
+	describe '登録'　do
+
+		context '○○の場合'do 
+		 before do
+		 		#context内を確認するのに必要な事前準備
+		 		end
+
+		 		it'○○する動作'do
+		 			期待する動作
+		 		end
+		 	end
+		 end
+
+		 describe '削除'　do
+		 略
+		 end
+	end
+
+resouce :task, onky: [:index]
+
+resources :tasks,expect: [:delete, :edit, :update]
+
+resouces :tasks do
+ collection do
+ 	get 'export'
+ 	end
+end
+
+Task.modek_name.human(locale: :en)
+Task.human_attribute_name, local: :ja 
+I18n.t("taskleaf.page.title.tasks", locale: :en)
+
+
+def show_custom_error_page(error)
+@error =error
+render :custom_error
+
+def create
+
+if @task.save
+logger.debug "task: #{@task.attributes.inspect}"
+redirect_to @task, notice:"タスク「#{@task.name}」を登録しました"
+else
+
+
+
+
+
